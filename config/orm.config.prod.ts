@@ -9,6 +9,6 @@ export default (): TypeOrmModuleOptions => {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     entities: ['dist/**/*.entity{.ts,.js}'],
-      synchronize: false,
+    synchronize: false,
   };
 };

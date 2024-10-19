@@ -13,6 +13,7 @@ import {
   // Query,
   // Req,
   UseFilters,
+  Logger,
   //HttpCode,
   //HttpStatus,
 } from '@nestjs/common';
@@ -31,16 +32,18 @@ import { EnvironmentVariables } from 'config/env-variables.interface';
 @Controller('users')
 @UsePipes(ValidationPipe)
 export class UsersController {
+  logger: Logger = new Logger(UsersController.name);
+
   constructor(
     private readonly userSrevice: UserService,
     private readonly configService: ConfigService<EnvironmentVariables>,
   ) {
     // console.log(this.configService.get<string>('DATABASE_HOST', 'root'));
-    console.log(
-      this.configService.get('EMAIL', {
-        infer: true,
-      }),
-    );
+    // console.log(
+    //   this.configService.get('EMAIL', {
+    //     infer: true,
+    //   }),
+    // );
     //  console.log(process.env.EMAIL);
   }
 
@@ -52,7 +55,11 @@ export class UsersController {
   : Promise<UserEntity[]> {
     // console.log('Request', req.body);
     // await new Promise((resolve) => setTimeout(resolve, 5000));
-    return this.userSrevice.findUsers();
+    this.logger.log('Fetching all users');
+    const users = await this.userSrevice.findUsers();
+    this.logger.debug(`Found ${users.length} users`);
+
+    return users;
   }
 
   @IsPublic()

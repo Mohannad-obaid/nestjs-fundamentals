@@ -10,9 +10,9 @@ import { UserModule } from './module/users/user.Module';
 import { LoggerMiddleware } from './common/middlewares/logger/logger.middleware';
 import { UsersController } from './module/users/user.Controller';
 import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import ormConfig from 'config/orm.config';
-import ormConfigProd from 'config/orm.config.prod';
+// import { TypeOrmModule } from '@nestjs/typeorm';
+// import ormConfig from 'config/orm.config';
+// import ormConfigProd from 'config/orm.config.prod';
 
 @Module({
   imports: [
