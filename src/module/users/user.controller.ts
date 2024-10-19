@@ -23,13 +23,26 @@ import { UserEntity } from './user.entity';
 import { UserService } from './user.service';
 import { CustomExcrptionFilter } from 'src/common/filters/custom-excrption/custom-excrption.filter';
 import { IsPublic, Roles } from 'src/common/decorators/public.decorator';
+import { ConfigService } from '@nestjs/config';
+import { EnvironmentVariables } from 'config/env-variables.interface';
 
 // The UseFilters decorator is used to apply a filter to a controller only.
 @UseFilters(CustomExcrptionFilter)
 @Controller('users')
 @UsePipes(ValidationPipe)
 export class UsersController {
-  constructor(private readonly userSrevice: UserService) {}
+  constructor(
+    private readonly userSrevice: UserService,
+    private readonly configService: ConfigService<EnvironmentVariables>,
+  ) {
+    // console.log(this.configService.get<string>('DATABASE_HOST', 'root'));
+    console.log(
+      this.configService.get('EMAIL', {
+        infer: true,
+      }),
+    );
+    //  console.log(process.env.EMAIL);
+  }
 
   //@SetMetadata('IsPublic', true)
   @IsPublic()
